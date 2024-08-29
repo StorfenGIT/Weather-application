@@ -13,7 +13,7 @@ const Weather = () => {
 
     const inputRef = useRef()
     const [weatherData, setWeatherData] = useState(false);
-
+// Adding all the icons used for the design
     const allIconns = {
         "01d": clear_icon,
         "01n": clear_icon,
@@ -31,11 +31,13 @@ const Weather = () => {
         "13n": snow_icon,
     }
 
+    // If user don't search for anything alert with message "Enter City Name"
     const search = async (city)=>{
         if(city === ""){
             alert("Enter City Name");
             return;
         }
+        // Fetching the API and deciding the metric data to celcius
         try {
             const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_API_KEY}`;
         
@@ -58,9 +60,10 @@ const Weather = () => {
         }
     }
 
+    // Auto starting search for the user
 useEffect(()=>{
     search("Stockholm")
-})    
+}, [])
     return (
         <div className='weather'>
             <div className='search-bar'>
@@ -68,7 +71,7 @@ useEffect(()=>{
                 <img src={search_icon} alt='' onClick={()=>search(inputRef.current.value)}/>
             </div>
 
-            {weatherData?<>
+            {weatherData? <>
                 <img src={weatherData.icon} alt="" className='weather-icon'/>
             <p className='temperature'>{weatherData.temperature}°C</p>
             <p className='location'>{weatherData.location}</p>
@@ -89,9 +92,9 @@ useEffect(()=>{
                     
                 </div>
             </div>
-            </>:<></>}
-
             
+            </>: <></>}
+                   
         </div>
     )
 }
